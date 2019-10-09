@@ -18,9 +18,7 @@ export class ModalAddComponent implements OnInit {
 
   constructor(private formBuider: FormBuilder,
               public modalRef: MatDialogRef<ModalAddComponent>,
-              private service: DictionaryService,
-              public messageService: MessagesService,
-              private nzMessageService: NzMessageService) {
+              private service: DictionaryService) {
   }
 
   /**
@@ -31,7 +29,7 @@ export class ModalAddComponent implements OnInit {
    * modal
    * @param data fetches the information of the fields in the modal
    */
-  async submitForm(data) {
+   submitForm(data) {
     for (const i in this.addValueForm.controls) {
       this.addValueForm.controls[i].markAsDirty();
       this.addValueForm.controls[i].updateValueAndValidity();
@@ -44,16 +42,7 @@ export class ModalAddComponent implements OnInit {
       )
       this.service.addValue(this.value);  // call addValue from the service
       this.modalRef.close();
-      await this.delay(4000);
-      this.messageService.clear();
     }
-  }
-  delay(milliseconds: number): Promise<number> {
-    return new Promise<number>(resolve => {
-      setTimeout(() => {
-        resolve();
-      }, milliseconds);
-    });
   }
   ngOnInit() {
     this.addValueForm = this.formBuider.group({
