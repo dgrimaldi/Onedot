@@ -8,6 +8,6 @@ import {Router} from '@angular/router';
 })
 export class AppComponent {
   title = 'Onedot';
-  constructor(public router: Router) {
+  constructor() {
   }
 }
