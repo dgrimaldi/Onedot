@@ -31,7 +31,7 @@ export class ModalAddComponent implements OnInit {
    * modal
    * @param data fetches the information of the fields in the modal
    */
-  submitForm(data) {
+  async submitForm(data) {
     for (const i in this.addValueForm.controls) {
       this.addValueForm.controls[i].markAsDirty();
       this.addValueForm.controls[i].updateValueAndValidity();
@@ -44,9 +44,17 @@ export class ModalAddComponent implements OnInit {
       )
       this.service.addValue(this.value);  // call addValue from the service
       this.modalRef.close();
+      await this.delay(4000);
+      this.messageService.clear();
     }
   }
-
+  delay(milliseconds: number): Promise<number> {
+    return new Promise<number>(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, milliseconds);
+    });
+  }
   ngOnInit() {
     this.addValueForm = this.formBuider.group({
       domain: [null, [Validators.required]],

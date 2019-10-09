@@ -44,6 +44,7 @@ export class DictionaryListComponent implements OnInit {
    *  If the local storage is not accessible an alert is displayed
    */
   private openModal(): void {
+    this.messageService.clear();
     const modalRef = this.modal.open(ModalAddComponent, {
       width: '600px',
       height: '400px'
