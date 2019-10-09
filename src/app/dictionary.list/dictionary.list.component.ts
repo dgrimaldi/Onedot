@@ -88,6 +88,7 @@ export class DictionaryListComponent implements OnInit {
     const index = this.dictionary.findIndex(value => value.id === id); // find index of this value in the dictionary
     this.removeEditable();
     this.dictionary[index].domIsEditable = true; // set enable to edit input in the dictionary
+    this.messageService.clear();
   }
 
   /**
@@ -102,6 +103,7 @@ export class DictionaryListComponent implements OnInit {
     const index = this.dictionary.findIndex(value => value.id === id); // find index of this value in the dictionary
     this.removeEditable();
     this.dictionary[index].ranIsEditable = true; // set enable to edit input in the dictionary
+    this.messageService.clear();
   }
 
   /**
@@ -113,7 +115,7 @@ export class DictionaryListComponent implements OnInit {
     this.dictionarySer.setValue(this.value);  // call addValue from the service
     this.removeEditable();
     this.dictionary = this.dictionarySer.getDictionary();
-    await this.delay(3000);
+    await this.delay(4000);
     this.messageService.clear(); // delay 3 seconds to clear messages
   }
 
