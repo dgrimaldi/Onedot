@@ -1,0 +1,20 @@
+<div *ngIf="service.messages.length">
+
+  <div *ngFor='let message of service.messages'>
+    <nz-alert
+      nzBanner
+      nzMessage="{{message.content}}"
+      nzCloseable
+      *ngIf="!message.type; else error"
+    ></nz-alert>
+    <ng-template #error>
+      <nz-alert
+        nzBanner
+        nzMessage="{{message.content}}"
+        nzCloseable
+        nzType="error"
+      ></nz-alert>
+    </ng-template>
+  </div>
+
+</div>

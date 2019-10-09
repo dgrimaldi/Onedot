@@ -1,0 +1,97 @@
+<nz-layout class="layout">
+  <nz-header class="my-nz">
+    <h1>Onedot dictionary</h1>
+  </nz-header>
+  <nz-content class="my-nz">
+    <button nz-button (click)="openModal()" nzType="primary" routerLink="add-value">Add</button>
+    <nz-layout>
+      <nz-card>
+        <nz-table #valueTable [nzPageIndex]="1" [nzTotal]="4" [nzShowTotal]="editTpl1" [nzShowTotal]="editTpl2"
+                  nzBordered
+                  [nzData]="dictionary" [nzShowPagination]="false">
+          <thead>
+          <tr>
+            <th nzWidth="3%"></th>
+            <th nzWidth="3%"></th>
+            <th nzWidth="10%">Id</th>
+            <th nzWidth="30%">Domain</th>
+            <th nzWidth="30%">Range</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let value of dictionary" class="editable-row">
+            <td>
+              <div *ngIf="value.duplicate.length !== 0 || value.fork.length !==0">
+                <a nz-icon [nzType]="'warning'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#b2b200'"
+                   (click)="onModal(false, value)"></a>
+                <nz-modal [(nzVisible)]="isVisibleWarning" nzTitle="Warning" (nzOnCancel)="isVisibleWarning = false" (nzOnOk)="isVisibleWarning = false">
+                  <div *ngFor="let duplicate of duplicates">
+                      <nz-alert nzType="warning"
+                                nzMessage="There is a duplicate between this row and the row with id No.{{duplicate}}"
+                                ng>
+                      </nz-alert>
+                  </div>
+                  <div *ngFor="let fork of forks">
+                    <nz-alert nzType="warning"
+                              nzMessage="There is a fork between this row and the row with id No.{{fork}}" ng>
+
+                    </nz-alert>
+                  </div>
+                </nz-modal>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="value.cycle.length !== 0 || value.chain.length !==0">
+                <a nz-icon [nzType]="'close-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#b20000'"
+                   (click)="onModal(true, value)"></a>
+                <nz-modal [(nzVisible)]="isVisibleError" nzTitle="Error" (nzOnCancel)="isVisibleError = false" (nzOnOk)="isVisibleError = false">
+                  <div *ngFor="let cycle of cycles">
+                    <nz-alert nzType="error"
+                              nzMessage="There is a cycle between this row and the row with id No.{{cycle}}"></nz-alert>
+                  </div>
+                  <div *ngFor="let chain of chains">
+                    <nz-alert nzType="error"
+                              nzMessage="There is a chain between this row and the row with id No.{{chain}}"></nz-alert>
+                  </div>
+                </nz-modal>
+              </div>
+            </td>
+            <td>No.{{value.id}}</td>
+            <td>
+              <div class="editable-cell" *ngIf="!value.domIsEditable; else editTpl1">
+                <div class="editable-cell-value-wrap" (click)="startEditDom(value.id, $event)">
+                  {{ value.domain }}
+                </div>
+              </div>
+              <ng-template #editTpl1>
+                <input #box type="text" nz-input [(ngModel)]="value.domain" (blur)="submitValue(value)"
+                       (keyup.enter)="submitValue(value)"/>
+              </ng-template>
+            </td>
+            <td>
+              <div class="editable-cell" *ngIf="!value.ranIsEditable; else editTpl2">
+                <div class="editable-cell-value-wrap" (click)="startEditRan(value.id, $event)">
+                  {{ value.range }}
+                </div>
+              </div>
+              <ng-template #editTpl2>
+                <input #box type="text" nz-input [(ngModel)]="value.range" (blur)="submitValue(value)"
+                       (keyup.enter)="submitValue(value)"/>
+              </ng-template>
+            </td>
+
+
+            <td>
+              <a nz-popconfirm nzTitle="Sure to delete?" (nzOnConfirm)="deleteValue(value)">Delete</a>
+            </td>
+
+
+          </tr>
+          </tbody>
+        </nz-table>
+      </nz-card>
+    </nz-layout>
+  </nz-content>
+</nz-layout>
+

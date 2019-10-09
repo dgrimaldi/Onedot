@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Issue Value</h1>
+<mat-dialog-content style="margin: 0 2% 0 2%;">
+
+  <form nz-form [formGroup]="addValueForm" (ngSubmit)="submitForm(addValueForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="domain">Domain</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid">
+        <input type="text" nz-input formControlName="domain" id="domain" required>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="range">Range</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input type="text" nz-input formControlName="range" id="range" required>
+      </nz-form-control>
+    </nz-form-item>
+
+
+    <nz-form-item nz-row class="register-area">
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <button nz-button nzType="primary">Register</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+</mat-dialog-content>
+
+
